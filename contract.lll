@@ -1,0 +1,17 @@
+(seq
+ (include "./stdlib.lll")
+ (seq
+  (def 'ens 0x0e37a1b1fd4ad724cbc409b02468a76196b44813)
+  (def 'domain (lit 0x20 "aaaaaa"))
+  (def 'owner 0x02571be3)
+
+  (returnlll (seq
+              (mstore call-result "test")
+
+              (mstore call-data (shift-left owner ))
+
+              (call (gas) 0 ens call-data 4 return-data 32)
+
+              (log1 call-result 32 (sha3 0x00 (lit 0x00 "Call(bool)")))
+              (return call-result 32)
+              ) )))
